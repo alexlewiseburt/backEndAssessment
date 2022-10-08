@@ -1,3 +1,5 @@
+const entries = [];
+
 module.exports = {
   getCompliment: (req, res) => {
     const compliments = [
@@ -26,5 +28,31 @@ module.exports = {
     let randomFortune = fortunes[randomIndex];
 
     res.status(200).send(randomFortune);
+  },
+
+  getEntries: (req, res) => {
+    res.status(200).json(entries);
+  },
+
+  createEntry: (req, res) => {
+    const { text } = req.body;
+    entries.push(text);
+
+    res.status(200).send(text);
+  },
+
+  updateEntry: (req, res) => {
+    const { index } = req.params;
+    const { text } = req.body;
+    entries[index] = text;
+
+    res.status(200).send(text);
+  },
+
+  deleteEntry: (req, res) => {
+    const { index } = req.params;
+    const [text] = entries.splice(index, 1);
+
+    res.status(200).send(text);
   },
 };
